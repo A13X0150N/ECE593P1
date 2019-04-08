@@ -7,10 +7,10 @@ module CSM
 )
 (
     input logic  [DATABITS-1:0] A_in_AD, B_in_AD, 
-                                A_out_data='0, B_out_data='0,
     input logic  A_rw, A_enable, A_hold, A_release,
                  B_rw, B_enable, B_hold, B_release,
                  clk, reset_n,
+    output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,
     output logic [1:0] A_err='0, B_err='0,
     output logic A_ack=0, B_ack=0
 );
