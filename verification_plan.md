@@ -7,8 +7,8 @@ What we should test
 	- Read and writes
     	- A reads B writes
     	- A writes B reads
-        	*  If a write request is made before a read of the same register, the read should receive the value written to the register. This applies regardless to which process side (A or B) makes the read and write requests.
-    		* If a read and write to the same register occurs at the same time (e.g. from different sides), the old value of the register is returned to the requesting reader
+        	* If a write request is made before a read of the same register, the read should receive the value written to the register. This applies regardless to which process side (A or B) makes the read and write requests.
+		* If a read and write to the same register occurs at the same time (e.g. from different sides), the old value of the register is returned to the requesting reader
 
 	- A hold B revoked
   	- A revoked B hold
