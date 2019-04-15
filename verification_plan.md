@@ -16,7 +16,7 @@ What we should test
 			the read should receive the value written to the register. 
 			This applies regardless to which process side (A or B) makes the read and write requests.
 		
-			* If a read and write to the same register occurs at the same time (e.g. from different sides),
+		* If a read and write to the same register occurs at the same time (e.g. from different sides),
 			the old value of the register is returned to the requesting reader
 	
 
