@@ -11,20 +11,24 @@
 //////////////////////////////////////////////////////////////////////////
 module CSM
 #(
-    parameter DATABITS = 8,	// Data b
-    parameter MEMSIZE = 8
+    parameter DATABITS = 8,	// Data lenght
+    parameter MEMSIZE = 8	// Indicates How many register CSM has
 )
 (
-    input logic  [DATABITS-1:0] A_in_AD, B_in_AD, 
-    input logic  A_rw, A_enable, A_hold, A_release,
+    input logic  [DATABITS-1:0] A_in_AD, B_in_AD, 	// Address and data inputs
+    input logic  A_rw, A_enable, A_hold, A_release,	// read/write, Enable, hold and release inputs for each processor 
                  B_rw, B_enable, B_hold, B_release,
-                 clk, reset_n,
-    output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,
-    output logic [1:0] A_err='0, B_err='0,
-    output logic A_ack=0, B_ack=0
+                 clk, reset_n,						// General system inputs
+    output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,	// Data outputs normally 0
+    output logic [1:0] A_err='0, B_err='0,			// Error outputs
+    output logic A_ack=0, B_ack=0					// Acknowledgment signals if no error ack signals = 1
 );
 
 // Error codes
+// 00 -> NO_ERROR: 	There is no error
+// 01 -> IN_USE:	owned by other processor
+// 10 -> DUAL_WRITE:Concurrent write
+// 11 -> DUAL_HOLD:	Concurrent hold
 enum bit [1:0] { NO_ERROR, IN_USE, DUAL_WRITE, DUAL_HOLD } ERROR_CODES;
 
 // Memory states
