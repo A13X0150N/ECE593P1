@@ -31,7 +31,7 @@ endinterface
 
 module tester(CSM_bfm bfm);
 
-function byte generate_addr();
+function byte generate_data();
 	byte		address;
 	bit	[1:0]	probablity; // It can be 00, 01, 10 or 11
 	probablity = $random;
@@ -42,9 +42,9 @@ function byte generate_addr();
 		return	8'hFF;
 	else
 		return $random;
-endfunction : generate_addr
+endfunction : generate_data
 
-function bit generate_rw(); // when we call this we need to check if Ack signal for that process is high or not
+function bit generate_rw(); // when we call this we need to check if Ack signal for that process is high or not also, if its read we need to check output
 	return $random;
 endfunction : generate_rw
 
@@ -52,7 +52,7 @@ function bit generate_enable(); // when we call this we need to check if Ack sig
 	return $random;
 endfunction : generate_enable
 
-function bit generate_hold(); // when we call this we need to check if Ack signal and Err for that processor
+function bit generate_hold(); // This part needs to change according to document (Hold sometimes needs to remain its status)
 	return $random;
 endfunction : generate_release
 
@@ -69,6 +69,7 @@ begin
 		// so probablity of 0.5*0.5 = 0.25 both try to hold at the same time however, holding same addresses is different
 		// each generates 25% all 0 25% all 1 25 % random number
 		// For processor A
+		// Here we are generating data not address also we need to generate addr for each 8 registers
 		A_in_AD = generate_addr();
 		if(bfm.A_ack)
 			A_rw = generate_rw();

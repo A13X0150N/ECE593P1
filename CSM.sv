@@ -1,8 +1,17 @@
-// CSM.sv
-
+//////////////////////////////////////////////////////////////////////////
+// 	CSM.sv
+//	ECE 593 - Fundamentals of Pressilicon Validation
+//	Assignment 1 - CSM Design
+// 	----------------------------------------------------
+// 	Description: Critical section manager has 8 different 8-bit registers
+//	Each register can be edited by one of two processors.  Processors
+//  concurrently read and write registers. Processors can lock
+//	one register to use exclusively. That time second processor cannot
+//	use locked register.
+//////////////////////////////////////////////////////////////////////////
 module CSM
 #(
-    parameter DATABITS = 8,
+    parameter DATABITS = 8,	// Data b
     parameter MEMSIZE = 8
 )
 (
