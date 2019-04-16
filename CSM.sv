@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 // 	CSM.sv
 //	ECE 593 - Fundamentals of Pressilicon Validation
+//	Alex Olson
+//	Can Orbegi
 //	Assignment 1 - CSM Design
 // 	----------------------------------------------------
 // 	Description: Critical section manager has 8 different 8-bit registers
