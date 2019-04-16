@@ -1,4 +1,7 @@
-What we should test
+Alex Olson
+Can Orbegi
+Matty Baba Allos
+ECE 593 - Verification plan
 
 	Valid operations
 	- A reads
@@ -12,13 +15,13 @@ What we should test
 		- A and B writes to different register addresses
 		- A and B reads from same register address
 		- A and B writes to same register address
-        	* If a write request is made before a read of the same register, 
-			the read should receive the value written to the register. 
+        	* If a write request is made before a read of the same register,
+			the read should receive the value written to the register.
 			This applies regardless to which process side (A or B) makes the read and write requests.
-		
+
 		* If a read and write to the same register occurs at the same time (e.g. from different sides),
 			the old value of the register is returned to the requesting reader
-	
+
 
 	- A hold B revoked
   	- A revoked B hold
@@ -34,11 +37,11 @@ What we should test
 	- write value and then read it the same
 	- read the same value twice
 
-	Output Behaviour
-	- Acknowledment signals
+	Output Behavior
+	- Acknowledgment signals
 	- Data outputs
 	- Error signals
-	
+
 	Invalid operations and Error
 		-A writes B writes ==> Dual write error
 		-A holds B holds ==> Dual hold
