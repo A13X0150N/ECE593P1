@@ -1,7 +1,7 @@
-Alex Olson
-Can Orbegi
-Matty Baba Allos
-ECE 593 - Verification plan
+	Alex Olson
+	Can Orbegi
+	Matty Baba Allos
+	ECE 593 - Verification plan
 
 	Valid operations
 	- A reads
