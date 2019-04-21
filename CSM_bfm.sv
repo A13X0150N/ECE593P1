@@ -101,7 +101,7 @@ task cmd_A_hold();
     while (A_ack == 0);     // Wait for the bus to be free
     A_enable = 1;           // Proc A enable
     A_hold = 1;             // Proc A hold
-    do @(negedge clk);a
+    do @(negedge clk);
     while (A_ack == 0);     // Wait for the response
     A_enable = 0;           // Proc A disable
     A_hold = 0;
