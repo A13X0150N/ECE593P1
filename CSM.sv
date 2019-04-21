@@ -14,15 +14,15 @@
 //////////////////////////////////////////////////////////////////////////
 module CSM
 #(
-    parameter DATABITS = 8,	// Data lenght
-    parameter MEMSIZE = 8	// Indicates How many register CSM has
+    parameter DATABITS = 8,	// Data length
+    parameter MEMSIZE = 8	// Indicates how many registers CSM has
 )
 (
     input logic  [DATABITS-1:0] A_in_AD, B_in_AD, 	// Address and data inputs
     input logic  A_rw, A_enable, A_hold, A_release,	// read/write, Enable, hold and release inputs for each processor 
                  B_rw, B_enable, B_hold, B_release,
                  clk, reset_n,						// General system inputs
-    output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,	// Data outputs normally 0
+    output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,	// Data outputs initialy 0
     output logic [1:0] A_err='0, B_err='0,			// Error outputs
     output logic A_ack=0, B_ack=0					// Acknowledgment signals if no error ack signals = 1
 );
