@@ -4,7 +4,7 @@ module tester(CSM_bfm bfm);
 	byte 	unsigned 	A_Data;
 	byte 	unsigned 	B_Addr;
 	byte 	unsigned 	B_Data;
-	bit		[4:0]		random_ops;
+	bit		[3:0]		random_ops;
 
 
 function byte generate_data();
