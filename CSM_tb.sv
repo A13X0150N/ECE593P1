@@ -7,7 +7,7 @@ initial $display("\n\n\t***** Starting CSM_tb top level *****\n");
 
 CSM_bfm 	bfm();
 tester		tester_i	(bfm);
-//coverage	coverage_i	(bfm);
+coverage	coverage_i	(bfm);
 //scoreboard	scoreboard_i(bfm);
 
 // DUT signals
