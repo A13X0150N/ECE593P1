@@ -1,5 +1,16 @@
 module coverage(CSM_bfm bfm);
 
+	covergroup valid_ops;
+
+	coverpoint bfm.op_set {
+			bins a_read = {a_read};
+			bins a_write = {write};
+			bins hold = {hold};
+			bins relse = {relse};
+			bins read_after_read = {read => read};
+			bins read_after_write = {write => read};
+	}
+
    covergroup singals @(negedge bfm.clk);
 		A_rw : coverpoint bfm.A_rw {
 			bins read = {'0};

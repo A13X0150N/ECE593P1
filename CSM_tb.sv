@@ -18,6 +18,11 @@ coverage	coverage_i	(bfm);
 //            B_rw, B_enable, B_hold, B_release,
 //            clk, reset_n, A_ack, B_ack;
 
+always begin
+	bfm.clk = ~bfm.clk;
+end
+
+
 CSM dut(.A_in_AD(bfm.A_in_AD), .B_in_AD(bfm.B_in_AD), .A_out_data(bfm.A_out_data), .B_out_data(bfm.B_out_data),
 	    .A_err(bfm.A_err), .B_err(bfm.B_err), .A_rw(bfm.A_rw), .A_enable(bfm.A_enable), .A_hold(bfm.A_hold),
 	    .A_release(bfm.A_release), .B_rw(bfm.B_rw), .B_enable(bfm.B_enable), .B_hold(bfm.B_hold), .B_release(bfm.B_release),

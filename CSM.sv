@@ -19,7 +19,7 @@ module CSM
 )
 (
     input logic  [DATABITS-1:0] A_in_AD, B_in_AD, 	// Address and data inputs
-    input logic  A_rw, A_enable, A_hold, A_release,	// read/write, Enable, hold and release inputs for each processor 
+    input logic  A_rw, A_enable, A_hold, A_release,	// read/write, Enable, hold and release inputs for each processor
                  B_rw, B_enable, B_hold, B_release,
                  clk, reset_n,						// General system inputs
     output logic [DATABITS-1:0] A_out_data='0, B_out_data='0,	// Data outputs initialy 0
@@ -35,13 +35,13 @@ module CSM
 enum bit [1:0] { NO_ERROR, IN_USE, DUAL_WRITE, DUAL_HOLD } ERROR_CODES;
 
 // Memory states
-typedef enum logic [2:0] {  IDLE, 
-                            A_READ, A_WRITE, 
+typedef enum logic [2:0] {  IDLE,
+                            A_READ, A_WRITE,
                             B_READ, B_WRITE,
-                            A_READ_B_WRITE, A_WRITE_B_READ, 
+                            A_READ_B_WRITE, A_WRITE_B_READ,
                             DUAL_READ } memory_states;
 
-memory_states current_state = IDLE; 
+memory_states current_state = IDLE;
 memory_states next_state = IDLE;
 
 localparam MEMBITS = $clog2(MEMSIZE);
@@ -55,7 +55,7 @@ logic [DATABITS-1:0] A_in_delay, B_in_delay;
 
 // Delay the signals by one clock cycle
 always_ff @(posedge clk or negedge reset_n) begin
-	
+
     if (~reset_n) begin : GAR_delay_signals
         A_in_delay <= '0;
         B_in_delay <= '0;
@@ -77,7 +77,7 @@ end : state_transition
 
 // Next state and memory logic
 always_comb begin : memory_logic
-    unique case (current_state)	
+    unique case (current_state)
        IDLE: begin
             // Simultaneous reading and writing
             if ((A_enable & B_enable) && (A_err == NO_ERROR) && (B_err == NO_ERROR)) begin
@@ -108,39 +108,39 @@ always_comb begin : memory_logic
             end
         end
 
-        A_READ: begin 
+        A_READ: begin
             A_out_data = mem[A_in_delay[MEMBITS-1:0]];
             next_state = IDLE;
         end
 
-        A_WRITE: begin 
+        A_WRITE: begin
             mem[A_in_delay[MEMBITS-1:0]] = A_in_AD;
             next_state = IDLE;
         end
 
-        B_READ: begin 
+        B_READ: begin
             B_out_data = mem[B_in_delay[MEMBITS-1:0]];
             next_state = IDLE;
         end
 
-        B_WRITE: begin 
+        B_WRITE: begin
             mem[B_in_delay[MEMBITS-1:0]] = B_in_AD;
             next_state = IDLE;
         end
 
-        A_READ_B_WRITE: begin 
+        A_READ_B_WRITE: begin
             A_out_data = mem[A_in_delay[MEMBITS-1:0]];	// Read before write
             mem[B_in_delay[MEMBITS-1:0]] = B_in_AD;
             next_state = IDLE;
         end
 
-        A_WRITE_B_READ: begin 
+        A_WRITE_B_READ: begin
             B_out_data = mem[B_in_delay[MEMBITS-1:0]];	// Read before write
             mem[A_in_delay[MEMBITS-1:0]] = A_in_AD;
             next_state = IDLE;
         end
 
-        DUAL_READ: begin 
+        DUAL_READ: begin
             A_out_data = mem[A_in_delay[MEMBITS-1:0]];
             B_out_data = mem[B_in_delay[MEMBITS-1:0]];
             next_state = IDLE;
@@ -151,7 +151,7 @@ end : memory_logic
 
 // Error Output Logic
 always_comb begin : error_output
-	
+
     if (A_rw & B_rw) begin : simultaneous_write
         A_err = DUAL_WRITE;
         B_err = DUAL_WRITE;

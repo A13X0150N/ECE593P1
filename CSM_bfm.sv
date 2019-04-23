@@ -6,7 +6,7 @@
 //  Matty Baba Allos
 //  Assignment 2 - CSM Design
 //  ----------------------------------------------------------------------
-//  Description: Interface for processor A and processor B signals interacting with the design. 
+//  Description: Interface for processor A and processor B signals interacting with the design.
 //               The signals in the interface are transaction-based using these tasks:
 //
 //
@@ -19,7 +19,7 @@
 //
 //      bfm.cmd_A_release();                                    Send a release signal for processor A
 //
-//      bfm.cmd_A_read(address_A);                              Send a read command and address on first cycle      
+//      bfm.cmd_A_read(address_A);                              Send a read command and address on first cycle
 //                                                              Data is returned to A_in_AD on the subsequent cycle
 //
 //      bfm.cmd_A_write(address_A, data_A);                     Send a write command and address on first cycle
@@ -29,7 +29,7 @@
 //
 //      bfm.cmd_B_release();                                    Send a release signal for processor B
 //
-//      bfm.cmd_B_read(address_B);                              Send a read command and address on first cycle      
+//      bfm.cmd_B_read(address_B);                              Send a read command and address on first cycle
 //                                                              Data is returned to B_in_AD on the subsequent cycle
 //
 //      bfm.cmd_B_write(address_B, data_B);                     Send a write command and address on first cycle
@@ -52,6 +52,9 @@ interface CSM_bfm
     parameter DATABITS = 8,      // Data length
     parameter ERRBITS = 2        // Error signal length
 );
+
+import tinyalu_pkg::*;
+
 
 ///////////////////////////////////////
 //         Interface Signals         //
@@ -82,10 +85,31 @@ wire [DATABITS-1:0] B_out_data;
 bit                 clk;
 bit                 reset_n;
 
+operation_t  op_set;
 
 ///////////////////////////////////////
 //          Bus Transactions         //
 ///////////////////////////////////////
+
+task send_op(input byte addr, input byte data,
+            input operation_t iop, output shortint data_out);
+    op_set = iop;
+
+     case (iop)
+            a_read   : cmd_A_read(addr);
+            a_write  : cmd_A_write(addr,data);
+            a_hold   : cmd_A_hold();
+            a_relse  : cmd_B_release();
+            b_read   : cmd_B_read(addr);
+            b_write  : cmd_B_write(addr,data);
+            b_hold   : cmd_B_hold();
+            b_relse  : cmd_B_release();
+      endcase // case (op_choice)
+endtask
+
+task rec
+
+
 // Reset device
 task cmd_reset();
     reset_n = 1;
@@ -99,8 +123,8 @@ endtask : cmd_reset
 task cmd_A_hold();
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the bus to be free
-    A_enable = 1;           // Proc A enable
     A_hold = 1;             // Proc A hold
+    A_enable = 1;           // Proc A enable
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the response
     A_enable = 0;           // Proc A disable
@@ -111,8 +135,8 @@ endtask : cmd_A_hold
 task cmd_A_release();
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the bus to be free
-    A_enable = 1;           // Proc A enable
     A_release = 1;          // Proc A release
+    A_enable = 1;           // Proc A enable
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the response
     A_enable = 0;           // Proc A disable
@@ -121,11 +145,12 @@ endtask : cmd_A_release
 
 // Processor A read
 task cmd_A_read(bit [DATABITS-1:0] addr);
-    A_enable = 1;           // Proc A enable
-    A_rw = 0;               // Proc A read
-    A_in_AD = addr;         // Put the address on the bus
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the response
+    A_rw = 0;               // Proc A read
+    A_in_AD = addr;         // Put the address on the bus
+    A_enable = 1;           // Proc A enable
+    #2;
     A_enable = 0;           // Proc A disable
 endtask : cmd_A_read
 
@@ -133,9 +158,9 @@ endtask : cmd_A_read
 task cmd_A_write(bit [DATABITS-1:0] addr, bit [DATABITS-1:0] data);
     do @(negedge clk);
     while (A_ack == 0);     // Wait for the bus to be free
-    A_enable = 1;           // Proc A enable
     A_rw = 1;               // Proc A write
     A_in_AD = addr;         // Put the address on the bus
+    A_enable = 1;           // Proc A enable
     @(posedge clk);         // Wait a cycle
     A_in_AD = data;         // Put the data on the bus
     @(negedge clk)          // Wait a half cycle
@@ -147,8 +172,8 @@ endtask : cmd_A_write
 task cmd_B_hold();
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the bus to be free
-    B_enable = 1;           // Proc B enable
     B_hold = 1;             // Proc B hold
+    B_enable = 1;           // Proc B enable
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the response
     B_enable = 0;           // Proc B disable
@@ -159,8 +184,8 @@ endtask : cmd_B_hold
 task cmd_B_release();
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the bus to be free
-    B_enable = 1;           // Proc B enable
     B_release = 1;          // Proc B release
+    B_enable = 1;           // Proc B enable
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the response
     B_enable = 0;           // Proc B disable
@@ -169,11 +194,12 @@ endtask : cmd_B_release
 
 // Processor B read
 task cmd_B_read(bit [DATABITS-1:0] addr);
-    B_enable = 1;           // Proc B enable
-    B_rw = 0;               // Proc B read
-    B_in_AD = addr;         // Put the address on the bus
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the response/data
+    B_rw = 0;               // Proc B read
+    B_in_AD = addr;         // Put the address on the bus
+    B_enable = 1;           // Proc B enable
+    #2;
     B_enable = 0;           // Proc B disable
 endtask : cmd_B_read
 
@@ -182,66 +208,14 @@ endtask : cmd_B_read
 task cmd_B_write(bit [DATABITS-1:0] addr, bit [DATABITS-1:0] data);
     do @(negedge clk);
     while (B_ack == 0);     // Wait for the bus to be free
-    B_enable = 1;           // Proc B enable
     B_rw = 1;               // Proc B write
     B_in_AD = addr;         // Put the address on the bus
+    B_enable = 1;           // Proc B enable
     @(posedge clk);         // Wait a cycle
     B_in_AD = data;         // Put the data on the bus
     @(negedge clk)          // Wait a half cycle
     B_enable = 0;           // Proc B disable
     B_rw = 0;               // Proc B read
 endtask : cmd_B_write
-
-// Processor A read and Processor B read
-task cmd_A_read_B_read(bit [DATABITS-1:0] A_addr, bit [DATABITS-1:0] B_addr);
-    A_enable = 1;           // Proc A enable
-    B_enable = 1;           // Proc B enable
-    A_rw = 0;               // Proc A read
-    B_rw = 0;               // Proc B read
-    A_in_AD = A_addr;       // Put address A on the bus
-    B_in_AD = B_addr;       // Put address B on the bus
-    do @(negedge clk);      // Wait for the data
-    while ((A_ack == 0) && (B_ack == 0));
-    A_enable = 0;           // Proc A disable
-    B_enable = 0;           // Proc B disable
-endtask : cmd_A_read_B_read
-
-// Processor A read and Processor B write
-task cmd_A_read_B_write(bit [DATABITS-1:0] A_addr,bit [DATABITS-1:0] B_addr, bit [DATABITS-1:0] data);
-    do @(negedge clk);
-    while (B_ack == 0);     // Wait for the bus to be free
-    A_enable = 1;           // Proc A enable
-    B_enable = 1;           // Proc B enable
-    A_rw = 0;               // Proc A read
-    B_rw = 1;               // Proc B write
-    A_in_AD = A_addr;       // Put the A address on the bus
-    B_in_AD = B_addr;       // Put the B address on the bus
-    @(posedge clk);         // Wait a cycle
-    B_in_AD = data;         // Put the write data on the proc B bus
-    do @(negedge clk);
-    while (A_ack == 0);     // Wait for the read data for proc A
-    A_enable = 0;           // Proc A disable
-    B_enable = 0;           // Proc B disable
-    B_rw = 0;               // Proc B read
-endtask : cmd_A_read_B_write
-
-// Processor A write and Processor B read
-task cmd_A_write_B_read(bit [DATABITS-1:0] A_addr,bit [DATABITS-1:0] B_addr, bit [DATABITS-1:0] data);
-    do @(negedge clk);
-    while (B_ack == 0);     // Wait for the bus to be free
-    A_enable = 1;           // Proc A enable
-    B_enable = 1;           // Proc B enable
-    A_rw = 1;               // Proc A write
-    B_rw = 0;               // Proc B read
-    A_in_AD = A_addr;       // Put the A address on the bus
-    B_in_AD = B_addr;       // Put the B address on the bus
-    @(posedge clk);         // Wait a cycle
-    A_in_AD = data;         // Put the write data on the proc A bus
-    do @(negedge clk);
-    while (A_ack == 0);     // Wait for the read data for proc B
-    A_enable = 0;           // Proc A disable
-    B_enable = 0;           // Proc B disable
-    A_rw = 0;               // Proc B read
-endtask : cmd_A_write_B_read
 
 endinterface : CSM_bfm
