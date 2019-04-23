@@ -91,8 +91,7 @@ operation_t  op_set;
 //          Bus Transactions         //
 ///////////////////////////////////////
 
-task send_op(input byte addr, input byte data,
-            input operation_t iop, output shortint data_out);
+task send_op(input byte addr, input byte data, input operation_t iop);
     op_set = iop;
 
      case (iop)

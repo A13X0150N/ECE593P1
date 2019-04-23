@@ -2,14 +2,31 @@ module coverage(CSM_bfm bfm);
 
 	covergroup valid_ops;
 
-	coverpoint bfm.op_set {
+	a_operations : coverpoint bfm.op_set {
 			bins a_read = {a_read};
-			bins a_write = {write};
-			bins hold = {hold};
-			bins relse = {relse};
-			bins read_after_read = {read => read};
-			bins read_after_write = {write => read};
-	}
+			bins a_write = {a_write};
+			bins a_hold = {a_hold};
+			bins a_relse = {a_relse};
+			}
+
+	b_operations : coverpoint bfm.op_set {
+			bins b_read = {b_read};
+			bins b_write = {b_write};
+			bins b_hold = {b_hold};
+			bins b_relse = {b_relse};
+			}
+
+	consective_op : coverpoint bfm.op_set {
+			bins a_read_twice = {a_read => a_read};
+			bins a_write_a_read = {a_writes => a_read};
+			bins a_read_b_writes = {a_read => b_writes};
+			bins b_read_a_writes = {b_read => a_writes};
+			}
+
+	cross a_operations, b_operations;
+
+	endgroup
+
 
    covergroup singals @(negedge bfm.clk);
 		A_rw : coverpoint bfm.A_rw {
@@ -70,31 +87,7 @@ module coverage(CSM_bfm bfm);
 
 	endgroup
 
-	covergroup ops @(negedge bfm.clk);
-		A_read: coverpoint { bfm.A_enable , bfm.A_rw , bfm.A_ack}{
-			bins read = {'b100};
-		}
-
-		B_read: coverpoint { bfm.B_enable , bfm.B_rw , bfm.B_ack}{
-			bins read = {'b100};
-		}
-
-
-		A_write: coverpoint { bfm.A_enable , bfm.A_rw , bfm.A_ack}{
-			bins write = {'b110};
-		}
-
-
-		B_write: coverpoint { bfm.B_enable , bfm.B_rw , bfm.B_ack}{
-			bins write = {'b110};
-		}
-
-		A_read_B_read: cross A_read, B_read;
-		A_read_B_write: cross A_read,B_write;
-		A_write_B_write: cross A_write, B_write;
-	endgroup
-
-	singals singals_cov = new;
-	ops ops_cov = new;
+	singals singals_cov = new();
+	valid_ops ops_cov = new();
 
 endmodule

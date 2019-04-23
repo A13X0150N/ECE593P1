@@ -19,7 +19,7 @@ coverage	coverage_i	(bfm);
 //            clk, reset_n, A_ack, B_ack;
 
 always begin
-	bfm.clk = ~bfm.clk;
+	#1 bfm.clk = ~bfm.clk;
 end
 
 

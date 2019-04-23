@@ -60,27 +60,37 @@ task A_write_twice();
 endtask
 
 task A_writes_read_same_value();
-		bfm.cmd_A_write(A_Addr,A_Data);
-		bfm.cmd_A_read(A_Addr);
+		bfm.send_op(A_Addr, A_Data, a_write);
+		bfm.send_op(A_Addr, A_Data, a_read);
 endtask
 
 task A_writes_B_writes();
 		fork
-			bfm.cmd_A_write(A_Addr,A_Data);
-			bfm.cmd_B_write(B_Addr,B_Data);
+			bfm.send_op(A_Addr, A_Data, a_write);
+			bfm.send_op(B_Addr, B_Data, b_write);
 		join
 endtask
 
 task A_holds_B_holds();
 		fork
-			bfm.cmd_A_hold();
-			bfm.cmd_B_hold();
+			bfm.send_op(A_Addr, A_Data, a_hold);
+			bfm.send_op(B_Addr, B_Data, b_hold);
 		join
 endtask
 
 task A_had_hold_B_holds();
-		bfm.cmd_A_hold();
-		bfm.cmd_B_hold();
+		bfm.send_op(A_Addr, A_Data, a_hold);
+		bfm.send_op(B_Addr, B_Data, b_hold);
+endtask
+
+task A_read_B_write();
+	bfm.send_op(A_Addr, A_Data, a_read);
+	bfm.send_op(B_Addr, B_Data, b_write);
+endtask
+
+task A_write_B_read();
+	bfm.send_op(A_Addr, A_Data, a_write);
+	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
 initial
@@ -100,13 +110,13 @@ begin : initial_part
 		B_Data = generate_data();
 
 		case(random_ops)
-			4'b0000 : bfm.cmd_A_write(A_Addr,A_Data);
-			4'b0001 : bfm.cmd_A_read(A_Addr);
-			4'b0010 : bfm.cmd_B_write(B_Addr,B_Data);
-			4'b0011 : bfm.cmd_B_read(B_Addr);
-			4'b0100 : bfm.cmd_A_read_B_read(A_Addr,B_Addr);
-			4'b0101 : bfm.cmd_A_read_B_write(A_Addr,B_Addr,B_Data);
-			4'b0110 : bfm.cmd_A_write_B_read(A_Addr,B_Addr,A_Data);
+			4'b0000 : bfm.send_op(A_Addr, A_Data, a_read);
+			4'b0001 : bfm.send_op(A_Addr, A_Data, a_write);
+			4'b0010 : bfm.send_op(B_Addr, B_Data, b_write);
+			4'b0011 : bfm.send_op(B_Addr, B_Data, b_read);
+			4'b0100 : A_read_B_read();
+			4'b0101 : A_read_B_write();
+			4'b0110 : A_write_B_read();
 			4'b0111 : A_hold_B_Reads(); //We should see an error
 			4'b1000 : A_reads_B_holds(); //We should see an error
 			4'b1001 : A_hold_A_relase_B_Reads();
