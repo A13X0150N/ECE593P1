@@ -99,8 +99,8 @@ endtask
 
 initial
 begin : initial_part
+	bfm.cmd_reset();
 	repeat (1000) begin: random_loop
-		
 
 		random_ops = $random;
 

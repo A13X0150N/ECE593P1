@@ -90,7 +90,8 @@ module coverage(CSM_bfm bfm);
 
 	endgroup
 
+	
 	singals singals_cov = new();
 	valid_ops ops_cov = new();
-
+	
 endmodule
