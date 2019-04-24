@@ -1,6 +1,6 @@
 module coverage(CSM_bfm bfm);
 
-	covergroup valid_ops;
+	covergroup valid_ops @(posedge bfm.clk);
 
 	a_operations : coverpoint bfm.op_set {
 			bins a_read = {a_read};
@@ -28,7 +28,7 @@ module coverage(CSM_bfm bfm);
 	endgroup
 
 
-   covergroup singals @(negedge bfm.clk);
+   covergroup singals @(posedge bfm.clk);
 		A_rw : coverpoint bfm.A_rw {
 			bins read = {'0};
 			bins write = {'1};
@@ -61,6 +61,8 @@ module coverage(CSM_bfm bfm);
 
 		A_hold : coverpoint bfm.A_hold;
 		B_hold : coverpoint bfm.B_hold;
+
+		A_B_hold : cross A_hold, B_hold;
 
 		A_release : coverpoint bfm.A_release;
 		B_release : coverpoint bfm.B_release;

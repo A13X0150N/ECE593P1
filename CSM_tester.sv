@@ -25,38 +25,29 @@ function byte generate_addr();
 	return address;
 endfunction : generate_addr
 
-// task send_and_wait();
-// 		fork
-// 		bfm.cmd_A_read(addr);
-// 		bfm.wait(A)
-
-// end
-
-
-
 task A_hold_B_Reads();
 		fork
-			bfm.cmd_A_hold();
-			bfm.cmd_B_read(B_Addr);
+			bfm.send_op(A_Addr, A_Data, a_hold);
+			bfm.send_op(B_Addr, B_Data, b_read);
 		join
 endtask
 
 task A_reads_B_holds();
 		fork
-			bfm.cmd_B_hold();
-			bfm.cmd_A_read(A_Addr);
+			bfm.send_op(B_Addr, B_Data, b_hold);
+			bfm.send_op(A_Addr, A_Data, a_read);
 		join
 endtask
 
 task A_hold_A_relase_B_Reads();
-		bfm.cmd_A_hold();
-		bfm.cmd_A_release();
-		bfm.cmd_B_read(B_Addr);
+		bfm.send_op(A_Addr, A_Data, a_hold);
+		bfm.send_op(A_Addr, A_Data, a_relse);
+		bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
 task A_write_twice();
-		bfm.cmd_A_write(A_Addr,A_Data);
-		bfm.cmd_A_write(A_Addr,A_Data);
+		bfm.send_op(A_Addr, A_Data, a_write);
+		bfm.send_op(A_Addr, A_Data, a_write);
 endtask
 
 task A_writes_read_same_value();
