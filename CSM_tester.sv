@@ -1,5 +1,8 @@
 module tester(CSM_bfm bfm);
 
+	import csm_pkg::*;
+
+
 	byte 	unsigned 	A_Addr;
 	byte 	unsigned 	A_Data;
 	byte 	unsigned 	B_Addr;

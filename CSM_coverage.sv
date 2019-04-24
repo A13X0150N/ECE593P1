@@ -1,4 +1,5 @@
 module coverage(CSM_bfm bfm);
+	import csm_pkg::*;
 
 	covergroup valid_ops @(posedge bfm.clk);
 
@@ -17,10 +18,10 @@ module coverage(CSM_bfm bfm);
 			}
 
 	consective_op : coverpoint bfm.op_set {
-			bins a_read_twice = {a_read => a_read};
-			bins a_write_a_read = {a_writes => a_read};
-			bins a_read_b_writes = {a_read => b_writes};
-			bins b_read_a_writes = {b_read => a_writes};
+			bins a_read_twice = (a_read => a_read);
+			bins a_write_a_read = (a_write => a_read);
+			bins a_read_b_writes = (a_read => b_write);
+			bins b_read_a_writes = (b_read => a_write);
 			}
 
 	cross a_operations, b_operations;

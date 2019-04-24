@@ -53,7 +53,7 @@ interface CSM_bfm
     parameter ERRBITS = 2        // Error signal length
 );
 
-import tinyalu_pkg::*;
+    import csm_pkg::*;
 
 
 ///////////////////////////////////////
@@ -105,9 +105,6 @@ task send_op(input byte addr, input byte data, input operation_t iop);
             b_relse  : cmd_B_release();
       endcase // case (op_choice)
 endtask
-
-task rec
-
 
 // Reset device
 task cmd_reset();

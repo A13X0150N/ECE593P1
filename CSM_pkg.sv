@@ -1,5 +1,5 @@
 package csm_pkg;
-      typedef enum bit[2:0] {
+      typedef enum bit[3:0] {
                         a_read,
                         a_write,
                         a_hold,
@@ -8,5 +8,5 @@ package csm_pkg;
                         b_write,
                         b_hold,
                         b_relse,
-                        reset} operation_t;
+                        rst} operation_t;
 endpackage : csm_pkg
