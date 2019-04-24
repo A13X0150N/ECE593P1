@@ -87,26 +87,20 @@ task A_write_B_read();
 	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
-// @ Added for coverage tester
 task A_read_twice();
 	bfm.send_op(A_Addr, A_Data, a_read);
 	bfm.send_op(A_Addr, A_Data, a_read);
 endtask
-
 	
 task A_read_B_read();
 	bfm.send_op(A_Addr, A_Data, a_read);
 	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
-// @ -----------
+
 initial
 begin : initial_part
 	repeat (1000) begin: random_loop
-		// Note for know probablity of %50 A wants to hold and probablity of %50 B wants to hold
-		// so probablity of 0.5*0.5 = 0.25 both try to hold at the same time however, holding same addresses is different
-		// each generates 25% all 0 25% all 1 25 % random number
-		// For processor A
-		// Here we are generating data not address also we need to generate addr for each 8 registers
+		
 
 		random_ops = $random;
 
@@ -114,7 +108,7 @@ begin : initial_part
 		A_Data = generate_data();
 		B_Addr = generate_addr();
 		B_Data = generate_data();
-
+		
 		case(random_ops)
 			4'b0000 : bfm.send_op(A_Addr, A_Data, a_read);
 			4'b0001 : bfm.send_op(A_Addr, A_Data, a_write);
@@ -133,7 +127,7 @@ begin : initial_part
 			4'b1110 : A_holds_B_holds();
 			4'b1111 : A_had_hold_B_holds();
 			default:
-					bfm.cmd_reset();
+					bfm.cmd_reset(); // never resets
 		endcase
 	end	: random_loop
 
