@@ -87,6 +87,18 @@ task A_write_B_read();
 	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
+// @ Added for coverage tester
+task A_read_twice();
+	bfm.send_op(A_Addr, A_Data, a_read);
+	bfm.send_op(A_Addr, A_Data, a_read);
+endtask
+
+	
+task A_read_B_read();
+	bfm.send_op(A_Addr, A_Data, a_read);
+	bfm.send_op(B_Addr, B_Data, b_read);
+endtask
+// @ -----------
 initial
 begin : initial_part
 	repeat (1000) begin: random_loop

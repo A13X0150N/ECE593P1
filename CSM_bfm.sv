@@ -87,6 +87,15 @@ bit                 reset_n;
 
 operation_t  op_set;
 
+
+// Generate Clock signal
+initial
+begin
+   clk = 1'b0;
+   forever #1 clk = ~clk;
+end
+
+
 ///////////////////////////////////////
 //          Bus Transactions         //
 ///////////////////////////////////////
