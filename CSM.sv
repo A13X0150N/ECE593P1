@@ -151,6 +151,12 @@ end : memory_logic
 
 // Error Output Logic
 always_comb begin : error_output
+    if (~reset_n) begin
+        A_err = NO_ERROR;
+        B_err = NO_ERROR;
+        A_ack = 1;
+        B_ack = 1;
+    end
 
     if (A_rw & B_rw) begin : simultaneous_write
         A_err = DUAL_WRITE;

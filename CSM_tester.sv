@@ -122,21 +122,21 @@ begin : initial_part
 			4'b0100 : A_read_B_read();
 			4'b0101 : A_read_B_write();
 			4'b0110 : A_write_B_read();
-			4'b0111 : A_hold_B_Reads(); //We should see an error
+			4'b0111 : ;//A_hold_B_Reads(); //We should see an error
 			4'b1000 : A_reads_B_holds(); //We should see an error
-			4'b1001 : A_hold_A_relase_B_Reads();
+			4'b1001 : ;//A_hold_A_relase_B_Reads();
 			4'b1010 : A_read_twice();
 			4'b1011 : A_write_twice();
 			4'b1100 : A_writes_read_same_value();
 			4'b1101 : A_writes_B_writes();
-			4'b1110 : A_holds_B_holds();
-			4'b1111 : A_had_hold_B_holds();
+			4'b1110 : ;//A_holds_B_holds();
+			4'b1111 : ;//A_had_hold_B_holds();
 			default:
 					bfm.cmd_reset(); // never resets
 		endcase
 		
 		counter = counter + 1;
-		// bfm.cmd_reset();
+		bfm.cmd_reset();
 		
 	end	: random_loop
 	$finish;
