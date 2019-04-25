@@ -1,3 +1,335 @@
+Coverage Report by file with details
+
+=================================================================================
+=== File: //khensu/Home03/orbegi/Desktop/ECE593/Coverage Test/ECE593P1/CSM_bfm.sv
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           85        74        11     87.05
+
+================================Statement Details================================
+
+Statement Coverage for file //khensu/Home03/orbegi/Desktop/ECE593/Coverage Test/ECE593P1/CSM_bfm.sv --
+
+    1                                                //////////////////////////////////////////////////////////////////////////
+    2                                                //  CSM_bfm.sv
+    3                                                //  ECE 593 - Fundamentals of Pre-Silicon Validation
+    4                                                //  Alex Olson
+    5                                                //  Can Orbegi
+    6                                                //  Matty Baba Allos
+    7                                                //  Assignment 2 - CSM Design
+    8                                                //  ----------------------------------------------------------------------
+    9                                                //  Description: Interface for processor A and processor B signals interacting with the design.
+    10                                               //               The signals in the interface are transaction-based using these tasks:
+    11                                               //
+    12                                               //
+    13                                               //      CSM_bfm bfm();                                          For this example, use an instance called "bfm"
+    14                                               //
+    15                                               //
+    16                                               //      bfm.cmd_reset();                                        Send a a reset signal into the device
+    17                                               //
+    18                                               //      bfm.cmd_A_hold();                                       Send a hold signal for processor A
+    19                                               //
+    20                                               //      bfm.cmd_A_release();                                    Send a release signal for processor A
+    21                                               //
+    22                                               //      bfm.cmd_A_read(address_A);                              Send a read command and address on first cycle
+    23                                               //                                                              Data is returned to A_in_AD on the subsequent cycle
+    24                                               //
+    25                                               //      bfm.cmd_A_write(address_A, data_A);                     Send a write command and address on first cycle
+    26                                               //                                                              Data is written to  A_in_AD on the subsequent cycle
+    27                                               //
+    28                                               //      bfm.cmd_B_hold();                                       Send a hold signal for processor B
+    29                                               //
+    30                                               //      bfm.cmd_B_release();                                    Send a release signal for processor B
+    31                                               //
+    32                                               //      bfm.cmd_B_read(address_B);                              Send a read command and address on first cycle
+    33                                               //                                                              Data is returned to B_in_AD on the subsequent cycle
+    34                                               //
+    35                                               //      bfm.cmd_B_write(address_B, data_B);                     Send a write command and address on first cycle
+    36                                               //                                                              Data is written to  B_in_AD on the subsequent cycle
+    37                                               //
+    38                                               //      bfm.cmd_A_read_B_read(address_A, address_B);            Send a read command and addresses on first cycle
+    39                                               //                                                              Data is returned to A_in_AD and B_in_AD on the subsequent cycle
+    40                                               //
+    41                                               //      bfm.cmd_A_read_B_write(address_A, address_B, data_B);   Send read/write commands and addresses on first cycle
+    42                                               //                                                              Data is written to B_in_AD amd returned to A_in_BD on subsequent cycle
+    43                                               //
+    44                                               //      bfm.cmd_A_write_B_read(address_A, address_B, data_A);   Send read/write commands and addresses on first cycle
+    45                                               //                                                              Data is written to A_in_AD amd returned to B_in_BD on subsequent cycle
+    46                                               //
+    47                                               //
+    48                                               //////////////////////////////////////////////////////////////////////////
+    49                                               
+    50                                               interface CSM_bfm
+    51                                               #(
+    52                                                   parameter DATABITS = 8,      // Data length
+    53                                                   parameter ERRBITS = 2        // Error signal length
+    54                                               );
+    55                                               
+    56                                                   import csm_pkg::*;
+    57                                               
+    58                                               
+    59                                               ///////////////////////////////////////
+    60                                               //         Interface Signals         //
+    61                                               ///////////////////////////////////////
+    62                                               // A Inputs
+    63                                               bit [DATABITS-1:0]  A_in_AD;
+    64                                               bit                 A_rw;
+    65                                               bit                 A_enable;
+    66                                               bit                 A_hold;
+    67                                               bit                 A_release;
+    68                                               // A Outputs
+    69                                               wire                A_ack;
+    70                                               wire [ERRBITS-1:0]  A_err;
+    71                                               wire [DATABITS-1:0] A_out_data;
+    72                                               
+    73                                               // B Inputs
+    74                                               bit [DATABITS-1:0]  B_in_AD;
+    75                                               bit                 B_rw;
+    76                                               bit                 B_enable;
+    77                                               bit                 B_hold;
+    78                                               bit                 B_release;
+    79                                               // B Outputs
+    80                                               wire                B_ack;
+    81                                               wire [ERRBITS-1:0]  B_err;
+    82                                               wire [DATABITS-1:0] B_out_data;
+    83                                               
+    84                                               // For system general
+    85                                               bit                 clk;
+    86                                               bit                 reset_n;
+    87                                               
+    88                                               operation_t  op_set;
+    89                                               
+    90                                               
+    91                                               // Generate Clock signal
+    92                                               initial
+    93                                               begin
+    94              1                          1        clk = 1'b0;
+    95              1                          1        forever #1 clk = ~clk;
+    95              2                   13874187     
+    95              3                   13874186     
+    96                                               end
+    97                                               
+    98                                               
+    99                                               ///////////////////////////////////////
+    100                                              //          Bus Transactions         //
+    101                                              ///////////////////////////////////////
+    102                                              
+    103                                              task send_op(input byte addr, input byte data, input operation_t iop);
+    104             1                         49         op_set = iop;
+    105                                              
+    106                                                   case (iop)
+    107             1                         19                 a_read   : cmd_A_read(addr);
+    108             1                          6                 a_write  : cmd_A_write(addr,data);
+    109             1                          5                 a_hold   : cmd_A_hold();
+    110             1                          1                 a_relse  : cmd_B_release();
+    111             1                          8                 b_read   : cmd_B_read(addr);
+    112             1                          6                 b_write  : cmd_B_write(addr,data);
+    113             1                          4                 b_hold   : cmd_B_hold();
+    114             1                    ***0***                 b_relse  : cmd_B_release();
+    115                                                    endcase // case (op_choice)
+    116                                              endtask
+    117                                              
+    118                                              // Reset device
+    119                                              task cmd_reset();
+    120             1                          1         reset_n = 1;
+    121             1                          1         @(posedge clk);
+    122             1                          1         reset_n = 0;
+    123             1                         10         repeat (10) @(posedge clk);
+    123             2                         10     
+    124             1                          1         reset_n = 1;
+    125                                              endtask : cmd_reset
+    126                                              
+    127                                              // Processor A hold
+    128                                              task cmd_A_hold();
+    129             1                          5         do @(negedge clk);
+    129             2                          5     
+    130                                                  while (A_ack == 0);     // Wait for the bus to be free
+    131             1                          5         A_hold = 1;             // Proc A hold
+    132             1                          5         A_enable = 1;           // Proc A enable
+    133             1                          5         do @(negedge clk);
+    133             2                          5     
+    134                                                  while (A_ack == 0);     // Wait for the response
+    135             1                          5         A_enable = 0;           // Proc A disable
+    136             1                          5         A_hold = 0;
+    137                                              endtask : cmd_A_hold
+    138                                              
+    139                                              // Processor A release
+    140                                              task cmd_A_release();
+    141             1                    ***0***         do @(negedge clk);
+    141             2                    ***0***     
+    142                                                  while (A_ack == 0);     // Wait for the bus to be free
+    143             1                    ***0***         A_release = 1;          // Proc A release
+    144             1                    ***0***         A_enable = 1;           // Proc A enable
+    145             1                    ***0***         do @(negedge clk);
+    145             2                    ***0***     
+    146                                                  while (A_ack == 0);     // Wait for the response
+    147             1                    ***0***         A_enable = 0;           // Proc A disable
+    148             1                    ***0***         A_release = 0;
+    149                                              endtask : cmd_A_release
+    150                                              
+    151                                              // Processor A read
+    152                                              task cmd_A_read(bit [DATABITS-1:0] addr);
+    153             1                         19         do @(negedge clk);
+    153             2                         19     
+    154                                                  while (A_ack == 0);     // Wait for the response
+    155             1                         19         A_rw = 0;               // Proc A read
+    156             1                         19         A_in_AD = addr;         // Put the address on the bus
+    157             1                         19         A_enable = 1;           // Proc A enable
+    158             1                         19         #2;
+    159             1                         19         A_enable = 0;           // Proc A disable
+    160                                              endtask : cmd_A_read
+    161                                              
+    162                                              // Processor A write
+    163                                              task cmd_A_write(bit [DATABITS-1:0] addr, bit [DATABITS-1:0] data);
+    164             1                          6         do @(negedge clk);
+    164             2                          6     
+    165                                                  while (A_ack == 0);     // Wait for the bus to be free
+    166             1                          6         A_rw = 1;               // Proc A write
+    167             1                          6         A_in_AD = addr;         // Put the address on the bus
+    168             1                          6         A_enable = 1;           // Proc A enable
+    169             1                          6         @(posedge clk);         // Wait a cycle
+    170             1                          6         A_in_AD = data;         // Put the data on the bus
+    171             1                          6         @(negedge clk)          // Wait a half cycle
+    172             1                          6         A_enable = 0;           // Proc A disable
+    173             1                          6         A_rw = 0;               // Proc A read
+    174                                              endtask : cmd_A_write
+    175                                              
+    176                                              // Processor B hold
+    177                                              task cmd_B_hold();
+    178             1                          4         do @(negedge clk);
+    178             2                          4     
+    179                                                  while (B_ack == 0);     // Wait for the bus to be free
+    180             1                          4         B_hold = 1;             // Proc B hold
+    181             1                          4         B_enable = 1;           // Proc B enable
+    182             1                          4         do @(negedge clk);
+    182             2                          4     
+    183                                                  while (B_ack == 0);     // Wait for the response
+    184             1                          4         B_enable = 0;           // Proc B disable
+    185             1                          4         B_hold = 0;
+    186                                              endtask : cmd_B_hold
+    187                                              
+    188                                              // Processor B release
+    189                                              task cmd_B_release();
+    190             1                          1         do @(negedge clk);
+    190             2                          1     
+    191                                                  while (B_ack == 0);     // Wait for the bus to be free
+    192             1                          1         B_release = 1;          // Proc B release
+    193             1                          1         B_enable = 1;           // Proc B enable
+    194             1                    6937023         do @(negedge clk);
+    194             2                    6937024     
+    195                                                  while (B_ack == 0);     // Wait for the response
+    196             1                    ***0***         B_enable = 0;           // Proc B disable
+    197             1                    ***0***         B_release = 0;
+    198                                              endtask : cmd_B_release
+    199                                              
+    200                                              // Processor B read
+    201                                              task cmd_B_read(bit [DATABITS-1:0] addr);
+    202             1                          8         do @(negedge clk);
+    202             2                          8     
+    203                                                  while (B_ack == 0);     // Wait for the response/data
+    204             1                          8         B_rw = 0;               // Proc B read
+    205             1                          8         B_in_AD = addr;         // Put the address on the bus
+    206             1                          8         B_enable = 1;           // Proc B enable
+    207             1                          8         #2;
+    208             1                          8         B_enable = 0;           // Proc B disable
+    209                                              endtask : cmd_B_read
+    210                                              
+    211                                              
+    212                                              // Processor B write
+    213                                              task cmd_B_write(bit [DATABITS-1:0] addr, bit [DATABITS-1:0] data);
+    214             1                          6         do @(negedge clk);
+    214             2                          6     
+    215                                                  while (B_ack == 0);     // Wait for the bus to be free
+    216             1                          6         B_rw = 1;               // Proc B write
+    217             1                          6         B_in_AD = addr;         // Put the address on the bus
+    218             1                          6         B_enable = 1;           // Proc B enable
+    219             1                          6         @(posedge clk);         // Wait a cycle
+    220             1                          6         B_in_AD = data;         // Put the data on the bus
+    221             1                          6         @(negedge clk)          // Wait a half cycle
+    222             1                          6         B_enable = 0;           // Proc B disable
+    223             1                          6         B_rw = 0;               // Proc B read
+    224                                              endtask : cmd_B_write
+    225                                              
+    226                                              endinterface : CSM_bfm
+
+Toggle Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Toggle Bins                    105        86        19     81.90
+
+================================Toggle Details================================
+
+Toggle Coverage for File //khensu/Home03/orbegi/Desktop/ECE593/Coverage Test/ECE593P1/CSM_bfm.sv --
+
+       Line                                   Node      1H->0L      0L->1H                          "Coverage"
+--------------------------------------------------------------------------------------------------------------
+         63                             A_in_AD[7]           1           1                              100.00 
+         63                             A_in_AD[6]           1           1                              100.00 
+         63                             A_in_AD[5]           1           1                              100.00 
+         63                             A_in_AD[4]           1           1                              100.00 
+         63                             A_in_AD[3]           1           1                              100.00 
+         63                             A_in_AD[2]           1           1                              100.00 
+         63                             A_in_AD[1]           1           1                              100.00 
+         63                             A_in_AD[0]           1           1                              100.00 
+         64                                   A_rw           1           1                              100.00 
+         65                               A_enable           1           1                              100.00 
+         66                                 A_hold           1           1                              100.00 
+         67                              A_release           0           0                                0.00 
+         69                                  A_ack           1           1                              100.00 
+         70                               A_err[1]           1           1                              100.00 
+         70                               A_err[0]           1           1                              100.00 
+         71                          A_out_data[7]           0           1                               50.00 
+         71                          A_out_data[6]           1           1                              100.00 
+         71                          A_out_data[5]           1           1                              100.00 
+         71                          A_out_data[4]           0           1                               50.00 
+         71                          A_out_data[3]           0           1                               50.00 
+         71                          A_out_data[2]           0           1                               50.00 
+         71                          A_out_data[1]           0           1                               50.00 
+         71                          A_out_data[0]           0           1                               50.00 
+         74                             B_in_AD[7]           1           1                              100.00 
+         74                             B_in_AD[6]           1           1                              100.00 
+         74                             B_in_AD[5]           1           1                              100.00 
+         74                             B_in_AD[4]           1           1                              100.00 
+         74                             B_in_AD[3]           1           1                              100.00 
+         74                             B_in_AD[2]           1           1                              100.00 
+         74                             B_in_AD[1]           1           1                              100.00 
+         74                             B_in_AD[0]           1           1                              100.00 
+         75                                   B_rw           1           1                              100.00 
+         76                               B_enable           1           1                              100.00 
+         77                                 B_hold           1           1                              100.00 
+         78                              B_release           0           1                               50.00 
+         80                                  B_ack           1           1                              100.00 
+         81                               B_err[1]           1           1                              100.00 
+         81                               B_err[0]           1           1                              100.00 
+         82                          B_out_data[7]           0           1                               50.00 
+         82                          B_out_data[6]           0           1                               50.00 
+         82                          B_out_data[5]           0           1                               50.00 
+         82                          B_out_data[4]           0           1                               50.00 
+         82                          B_out_data[3]           0           1                               50.00 
+         82                          B_out_data[2]           0           1                               50.00 
+         82                          B_out_data[1]           0           1                               50.00 
+         82                          B_out_data[0]           0           1                               50.00 
+         85                                    clk           1           1                              100.00 
+         86                                reset_n           1           1                              100.00 
+         88                                 op_set               ENUM type       Value       Count 
+                                                                    a_read           6      100.00 
+                                                                   a_write           6      100.00 
+                                                                    a_hold           5      100.00 
+                                                                   a_relse           1      100.00 
+                                                                    b_read           5      100.00 
+                                                                   b_write           3      100.00 
+                                                                    b_hold           4      100.00 
+                                                                   b_relse           0        0.00 
+                                                                       rst           0        0.00 
+
+Total Node Count     =         57 
+Toggled Node Count   =         39 
+Untoggled Node Count =         18 
+
+Toggle Coverage      =      81.90% (86 of 105 bins)
+
 COVERGROUP COVERAGE:
 -----------------------------------------------------------------------------------------------
 Covergroup                                             Metric       Goal    Status               
@@ -67,7 +399,7 @@ Covergroup                                             Metric       Goal    Stat
         bin a_read                                         37          1    Covered              
         bin a_write                                         5          1    Covered              
         bin a_hold                                          5          1    Covered              
-        bin a_relse                                   8692861          1    Covered              
+        bin a_relse                                   6937024          1    Covered              
     Coverpoint b_operations                            75.00%        100    Uncovered            
         covered/total bins:                                 3          4                      
         missing/total bins:                                 1          4                      
@@ -274,7 +606,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin read                                      8692924          1    Covered              
+        bin read                                      6937087          1    Covered              
         bin write                                           6          1    Covered              
     Coverpoint B_rw                                   100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -286,7 +618,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin read                                      8692924          1    Covered              
+        bin read                                      6937087          1    Covered              
         bin write                                           6          1    Covered              
     Coverpoint A_ack                                  100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -299,7 +631,7 @@ Covergroup                                             Metric       Goal    Stat
         option.auto_bin_max=64
         option.detect_overlap=0
         bin no_ack                                          7          1    Covered              
-        bin ack                                       8692923          1    Covered              
+        bin ack                                       6937086          1    Covered              
     Coverpoint B_ack                                  100.00%        100    Covered              
         covered/total bins:                                 2          2                      
         missing/total bins:                                 0          2                      
@@ -310,7 +642,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin no_ack                                    8692868          1    Covered              
+        bin no_ack                                    6937031          1    Covered              
         bin ack                                            62          1    Covered              
     Coverpoint A_enable                               100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -322,7 +654,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin A_disable                                 8692900          1    Covered              
+        bin A_disable                                 6937063          1    Covered              
         bin A_enable                                       30          1    Covered              
     Coverpoint B_enable                               100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -335,7 +667,7 @@ Covergroup                                             Metric       Goal    Stat
         option.auto_bin_max=64
         option.detect_overlap=0
         bin B_disable                                      52          1    Covered              
-        bin B_enable                                  8692878          1    Covered              
+        bin B_enable                                  6937041          1    Covered              
     Coverpoint A_hold                                 100.00%        100    Covered              
         covered/total bins:                                 2          2                      
         missing/total bins:                                 0          2                      
@@ -346,7 +678,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin auto[0]                                   8692925          1    Covered              
+        bin auto[0]                                   6937088          1    Covered              
         bin auto[1]                                         5          1    Covered              
     Coverpoint B_hold                                 100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -358,7 +690,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin auto[0]                                   8692926          1    Covered              
+        bin auto[0]                                   6937089          1    Covered              
         bin auto[1]                                         4          1    Covered              
     Coverpoint A_release                               50.00%        100    Uncovered            
         covered/total bins:                                 1          2                      
@@ -370,7 +702,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin auto[0]                                   8692930          1    Covered              
+        bin auto[0]                                   6937093          1    Covered              
         bin auto[1]                                         0          1    ZERO                 
     Coverpoint B_release                              100.00%        100    Covered              
         covered/total bins:                                 2          2                      
@@ -383,7 +715,7 @@ Covergroup                                             Metric       Goal    Stat
         option.auto_bin_max=64
         option.detect_overlap=0
         bin auto[0]                                        70          1    Covered              
-        bin auto[1]                                   8692860          1    Covered              
+        bin auto[1]                                   6937023          1    Covered              
     Coverpoint A_err                                   75.00%        100    Uncovered            
         covered/total bins:                                 3          4                      
         missing/total bins:                                 1          4                      
@@ -396,7 +728,7 @@ Covergroup                                             Metric       Goal    Stat
         option.detect_overlap=0
         bin auto[0]                                        63          1    Covered              
         bin auto[1]                                         4          1    Covered              
-        bin auto[2]                                   8692863          1    Covered              
+        bin auto[2]                                   6937026          1    Covered              
         bin auto[3]                                         0          1    ZERO                 
     Coverpoint B_err                                  100.00%        100    Covered              
         covered/total bins:                                 4          4                      
@@ -411,7 +743,7 @@ Covergroup                                             Metric       Goal    Stat
         bin auto[0]                                        62          1    Covered              
         bin auto[1]                                         5          1    Covered              
         bin auto[2]                                         3          1    Covered              
-        bin auto[3]                                   8692860          1    Covered              
+        bin auto[3]                                   6937023          1    Covered              
     Coverpoint A_in_AD                                  3.12%        100    Uncovered            
         covered/total bins:                                 2         64                      
         missing/total bins:                                62         64                      
@@ -485,7 +817,7 @@ Covergroup                                             Metric       Goal    Stat
         bin auto[240:243]                                   0          1    ZERO                 
         bin auto[244:247]                                   0          1    ZERO                 
         bin auto[248:251]                                   0          1    ZERO                 
-        bin auto[252:255]                             8692872          1    Covered              
+        bin auto[252:255]                             6937035          1    Covered              
     Coverpoint B_in_AD                                  9.37%        100    Uncovered            
         covered/total bins:                                 6         64                      
         missing/total bins:                                58         64                      
@@ -496,7 +828,7 @@ Covergroup                                             Metric       Goal    Stat
         option.at_least=1
         option.auto_bin_max=64
         option.detect_overlap=0
-        bin auto[0:3]                                 8692905          1    Covered              
+        bin auto[0:3]                                 6937068          1    Covered              
         bin auto[4:7]                                       0          1    ZERO                 
         bin auto[8:11]                                      9          1    Covered              
         bin auto[12:15]                                     0          1    ZERO                 
@@ -707,7 +1039,7 @@ Covergroup                                             Metric       Goal    Stat
         bin auto[240:243]                                   0          1    ZERO                 
         bin auto[244:247]                                   0          1    ZERO                 
         bin auto[248:251]                                   0          1    ZERO                 
-        bin auto[252:255]                             8692868          1    Covered              
+        bin auto[252:255]                             6937031          1    Covered              
     Cross A_B_hold                                     75.00%        100    Uncovered            
         covered/total bins:                                 3          4                      
         missing/total bins:                                 1          4                      
@@ -717,9 +1049,12 @@ Covergroup                                             Metric       Goal    Stat
         option.comment=
         option.at_least=1
         option.cross_num_print_missing=0
-        bin <auto[0],auto[0]>                         8692921          1    Covered              
+        bin <auto[0],auto[0]>                         6937084          1    Covered              
         bin <auto[1],auto[0]>                               5          1    Covered              
         bin <auto[0],auto[1]>                               4          1    Covered              
         bin <auto[1],auto[1]>                               0          1    ZERO                 
 
 TOTAL COVERGROUP COVERAGE: 67.14%  COVERGROUP TYPES: 2
+
+Total Coverage By File (code coverage only, filtered view): 84.48%
+
