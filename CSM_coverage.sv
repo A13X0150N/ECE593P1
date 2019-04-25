@@ -72,21 +72,13 @@ module coverage(CSM_bfm bfm);
 		B_err : coverpoint bfm.B_err;
 
 
-		A_in_AD : coverpoint bfm.A_in_AD{
-				bins address_data[4] = {[0:$]};
-		}
+		A_in_AD : coverpoint bfm.A_in_AD;
 
-		B_in_AD : coverpoint bfm.B_in_AD{
-				bins address_data[4] = {[0:$]};
-		}
+		B_in_AD : coverpoint bfm.B_in_AD;
 
-		A_out_data : coverpoint bfm.A_out_data{
-				bins dataout[4] = {[0:$]};
-		}
+		A_out_data : coverpoint bfm.A_out_data;
 
-		B_out_data : coverpoint bfm.B_out_data{
-				bins dataout[4] = {[0:$]};
-		}
+		B_out_data : coverpoint bfm.B_out_data;
 
 	endgroup
 

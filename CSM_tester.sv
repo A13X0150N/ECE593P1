@@ -24,7 +24,7 @@ endfunction : generate_data
 
 function byte generate_addr();
 	byte		address;
-	address = 	$random & 2'b11; // It can be 0,1,2,3
+	address = 	$random & 3'b111; // It can be 0,1,2,3
 	return address;
 endfunction : generate_addr
 
@@ -97,17 +97,22 @@ task A_read_B_read();
 	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
+int counter;
+
 initial
 begin : initial_part
 	bfm.cmd_reset();
+	counter = 0;
 	repeat (1000) begin: random_loop
-
+	
 		random_ops = $random;
 
 		A_Addr = generate_addr();
 		A_Data = generate_data();
 		B_Addr = generate_addr();
 		B_Data = generate_data();
+		
+		$display("counter:%d, ops:%d", counter,random_ops);
 		
 		case(random_ops)
 			4'b0000 : bfm.send_op(A_Addr, A_Data, a_read);
@@ -129,8 +134,12 @@ begin : initial_part
 			default:
 					bfm.cmd_reset(); // never resets
 		endcase
+		
+		counter = counter + 1;
+		// bfm.cmd_reset();
+		
 	end	: random_loop
-
+	$finish;
 end : initial_part
 
 endmodule : tester
