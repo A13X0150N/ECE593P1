@@ -1,0 +1,81 @@
+toggle report -all
+# Coverage Report by instance with details
+# 
+# Coverage Report Toggles BY INSTANCES
+# Toggle Coverage:
+#     Enabled Coverage            Active      Hits    Misses % Covered
+#     ----------------            ------      ----    ------ ---------
+#     Toggle Bins                    105        86        19     81.90
+# 
+# ================================Toggle Details================================
+# 
+# Toggle Coverage for ALL instances --
+# 
+#                                               Node      1H->0L      0L->1H                          "Coverage"
+#                                               ---------------------------------------------------------------
+#                                  /CSM_tb/bfm/A_ack           1           1                              100.00 
+#                               /CSM_tb/bfm/A_err[0]           1           1                              100.00 
+#                               /CSM_tb/bfm/A_err[1]           1           1                              100.00 
+#                          /CSM_tb/bfm/A_out_data[0]           0           1                               50.00 
+#                          /CSM_tb/bfm/A_out_data[1]           0           1                               50.00 
+#                          /CSM_tb/bfm/A_out_data[2]           0           1                               50.00 
+#                          /CSM_tb/bfm/A_out_data[3]           0           1                               50.00 
+#                          /CSM_tb/bfm/A_out_data[4]           0           1                               50.00 
+#                          /CSM_tb/bfm/A_out_data[5]           1           1                              100.00 
+#                          /CSM_tb/bfm/A_out_data[6]           1           1                              100.00 
+#                          /CSM_tb/bfm/A_out_data[7]           0           1                               50.00 
+#                                  /CSM_tb/bfm/B_ack           1           1                              100.00 
+#                               /CSM_tb/bfm/B_err[0]           1           1                              100.00 
+#                               /CSM_tb/bfm/B_err[1]           1           1                              100.00 
+#                          /CSM_tb/bfm/B_out_data[0]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[1]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[2]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[3]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[4]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[5]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[6]           0           1                               50.00 
+#                          /CSM_tb/bfm/B_out_data[7]           0           1                               50.00 
+#                                /CSM_tb/bfm/reset_n           1           1                              100.00 
+#                                    /CSM_tb/bfm/clk           1           1                              100.00 
+#                              /CSM_tb/bfm/B_release           0           1                               50.00 
+#                                 /CSM_tb/bfm/B_hold           1           1                              100.00 
+#                               /CSM_tb/bfm/B_enable           1           1                              100.00 
+#                                   /CSM_tb/bfm/B_rw           1           1                              100.00 
+#                              /CSM_tb/bfm/A_release           0           0                                0.00 
+#                                 /CSM_tb/bfm/A_hold           1           1                              100.00 
+#                               /CSM_tb/bfm/A_enable           1           1                              100.00 
+#                                   /CSM_tb/bfm/A_rw           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[7]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[6]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[5]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[4]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[3]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[2]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[1]           1           1                              100.00 
+#                             /CSM_tb/bfm/B_in_AD[0]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[7]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[6]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[5]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[4]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[3]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[2]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[1]           1           1                              100.00 
+#                             /CSM_tb/bfm/A_in_AD[0]           1           1                              100.00 
+#                                 /CSM_tb/bfm/op_set               ENUM type       Value       Count 
+#                                                                     a_read           6      100.00 
+#                                                                    a_write           6      100.00 
+#                                                                     a_hold           5      100.00 
+#                                                                    a_relse           1      100.00 
+#                                                                     b_read           5      100.00 
+#                                                                    b_write           3      100.00 
+#                                                                     b_hold           4      100.00 
+#                                                                    b_relse           0        0.00 
+#                                                                        rst           0        0.00 
+# 
+# Total Node Count     =         57 
+# Toggled Node Count   =         39 
+# Untoggled Node Count =         18 
+# 
+# Toggle Coverage      =      81.90% (86 of 105 bins)
+# 
+# 
