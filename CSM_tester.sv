@@ -1,3 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+// 	CSM_tester.sv
+//	ECE 593 - Fundamentals of Pressilicon Validation
+//	Alex Olson
+//	Nurettin Can Orbegi
+//	Matty Baba Allos
+//	Assignment 1 - CSM Tester Design
+// 	----------------------------------------------------
+// 	Description: Tester module generates possible operations to send design
+//////////////////////////////////////////////////////////////////////////
+
 module tester(CSM_bfm bfm);
 
 	import csm_pkg::*;
@@ -24,7 +35,7 @@ endfunction : generate_data
 
 function byte generate_addr();
 	byte		address;
-	address = 	$random & 3'b111; // It can be 0,1,...,7
+	address = 	$random & 3'b111; // It can be 0,1,2,3
 	return address;
 endfunction : generate_addr
 
@@ -97,17 +108,22 @@ task A_read_B_read();
 	bfm.send_op(B_Addr, B_Data, b_read);
 endtask
 
+int counter;
+
 initial
 begin : initial_part
 	bfm.cmd_reset();
+	counter = 0;
 	repeat (1000) begin: random_loop
-
+	
 		random_ops = $random;
 
 		A_Addr = generate_addr();
 		A_Data = generate_data();
 		B_Addr = generate_addr();
 		B_Data = generate_data();
+		
+		$display("counter:%d, ops:%d", counter,random_ops);
 		
 		case(random_ops)
 			4'b0000 : bfm.send_op(A_Addr, A_Data, a_read);
@@ -117,20 +133,24 @@ begin : initial_part
 			4'b0100 : A_read_B_read();
 			4'b0101 : A_read_B_write();
 			4'b0110 : A_write_B_read();
-			4'b0111 : A_hold_B_Reads(); //We should see an error
+			4'b0111 : ;//A_hold_B_Reads(); //We should see an error
 			4'b1000 : A_reads_B_holds(); //We should see an error
-			4'b1001 : A_hold_A_relase_B_Reads();
+			4'b1001 : ;//A_hold_A_relase_B_Reads();
 			4'b1010 : A_read_twice();
 			4'b1011 : A_write_twice();
 			4'b1100 : A_writes_read_same_value();
 			4'b1101 : A_writes_B_writes();
-			4'b1110 : A_holds_B_holds();
-			4'b1111 : A_had_hold_B_holds();
+			4'b1110 : ;//A_holds_B_holds();
+			4'b1111 : ;//A_had_hold_B_holds();
 			default:
 					bfm.cmd_reset(); // never resets
 		endcase
+		
+		counter = counter + 1;
+		bfm.cmd_reset();
+		
 	end	: random_loop
-
+	$finish;
 end : initial_part
 
 endmodule : tester

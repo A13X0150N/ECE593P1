@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////////////////////
+// 	CSM_coverage.sv
+//	ECE 593 - Fundamentals of Pressilicon Validation
+//	Alex Olson
+//	Nurettin Can Orbegi
+//	Matty Baba Allos
+//	Assignment 1 - CSM Coverage Design
+// 	----------------------------------------------------
+// 	Description: Operation and signal coverages defined in this module
+//////////////////////////////////////////////////////////////////////////
 module coverage(CSM_bfm bfm);
 	import csm_pkg::*;
 
@@ -79,7 +89,7 @@ module coverage(CSM_bfm bfm);
 		A_out_data : coverpoint bfm.A_out_data;
 
 		B_out_data : coverpoint bfm.B_out_data;
-	
+
 	endgroup
 
 	singals singals_cov = new();

@@ -1,4 +1,13 @@
-// CSM_tb.sv
+//////////////////////////////////////////////////////////////////////////
+// 	CSM_tb.sv
+//	ECE 593 - Fundamentals of Pressilicon Validation
+//	Alex Olson
+//	Nurettin Can Orbegi
+//	Matty Baba Allos
+//	Assignment 1 - CSM Testbench Design
+// 	----------------------------------------------------
+// 	Description: Testbench module is a top module that connects CSM_bfm interface, tester and coverage modules
+//////////////////////////////////////////////////////////////////////////
 
 module CSM_tb;
 
@@ -10,13 +19,7 @@ tester		tester_i	(bfm);
 coverage	coverage_i	(bfm);
 //scoreboard	scoreboard_i(bfm);
 
-// DUT signals
-//logic [7:0] A_in_AD, B_in_AD,
-//            A_out_data, B_out_data;
-//logic [1:0] A_err, B_err;
-//logic       A_rw, A_enable, A_hold, A_release,
-//            B_rw, B_enable, B_hold, B_release,
-//            clk, reset_n, A_ack, B_ack;
+
 
 CSM dut(.A_in_AD(bfm.A_in_AD), .B_in_AD(bfm.B_in_AD), .A_out_data(bfm.A_out_data), .B_out_data(bfm.B_out_data),
 	    .A_err(bfm.A_err), .B_err(bfm.B_err), .A_rw(bfm.A_rw), .A_enable(bfm.A_enable), .A_hold(bfm.A_hold),
