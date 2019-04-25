@@ -1,0 +1,569 @@
+Coverage Report by file with details
+
+=================================================================================
+=== File: //khensu/Home03/orbegi/Desktop/ECE593/Coverage Test/ECE593P1/CSM_bfm.sv
+=================================================================================
+Toggle Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Toggle Bins                    105        86        19     81.90
+
+================================Toggle Details================================
+
+Toggle Coverage for File //khensu/Home03/orbegi/Desktop/ECE593/Coverage Test/ECE593P1/CSM_bfm.sv --
+
+       Line                                   Node      1H->0L      0L->1H                          "Coverage"
+--------------------------------------------------------------------------------------------------------------
+         63                             A_in_AD[7]           1           1                              100.00 
+         63                             A_in_AD[6]           1           1                              100.00 
+         63                             A_in_AD[5]           1           1                              100.00 
+         63                             A_in_AD[4]           1           1                              100.00 
+         63                             A_in_AD[3]           1           1                              100.00 
+         63                             A_in_AD[2]           1           1                              100.00 
+         63                             A_in_AD[1]           1           1                              100.00 
+         63                             A_in_AD[0]           1           1                              100.00 
+         64                                   A_rw           1           1                              100.00 
+         65                               A_enable           1           1                              100.00 
+         66                                 A_hold           1           1                              100.00 
+         67                              A_release           0           0                                0.00 
+         69                                  A_ack           1           1                              100.00 
+         70                               A_err[1]           1           1                              100.00 
+         70                               A_err[0]           1           1                              100.00 
+         71                          A_out_data[7]           0           1                               50.00 
+         71                          A_out_data[6]           1           1                              100.00 
+         71                          A_out_data[5]           1           1                              100.00 
+         71                          A_out_data[4]           0           1                               50.00 
+         71                          A_out_data[3]           0           1                               50.00 
+         71                          A_out_data[2]           0           1                               50.00 
+         71                          A_out_data[1]           0           1                               50.00 
+         71                          A_out_data[0]           0           1                               50.00 
+         74                             B_in_AD[7]           1           1                              100.00 
+         74                             B_in_AD[6]           1           1                              100.00 
+         74                             B_in_AD[5]           1           1                              100.00 
+         74                             B_in_AD[4]           1           1                              100.00 
+         74                             B_in_AD[3]           1           1                              100.00 
+         74                             B_in_AD[2]           1           1                              100.00 
+         74                             B_in_AD[1]           1           1                              100.00 
+         74                             B_in_AD[0]           1           1                              100.00 
+         75                                   B_rw           1           1                              100.00 
+         76                               B_enable           1           1                              100.00 
+         77                                 B_hold           1           1                              100.00 
+         78                              B_release           0           1                               50.00 
+         80                                  B_ack           1           1                              100.00 
+         81                               B_err[1]           1           1                              100.00 
+         81                               B_err[0]           1           1                              100.00 
+         82                          B_out_data[7]           0           1                               50.00 
+         82                          B_out_data[6]           0           1                               50.00 
+         82                          B_out_data[5]           0           1                               50.00 
+         82                          B_out_data[4]           0           1                               50.00 
+         82                          B_out_data[3]           0           1                               50.00 
+         82                          B_out_data[2]           0           1                               50.00 
+         82                          B_out_data[1]           0           1                               50.00 
+         82                          B_out_data[0]           0           1                               50.00 
+         85                                    clk           1           1                              100.00 
+         86                                reset_n           1           1                              100.00 
+         88                                 op_set               ENUM type       Value       Count 
+                                                                    a_read           6      100.00 
+                                                                   a_write           6      100.00 
+                                                                    a_hold           5      100.00 
+                                                                   a_relse           1      100.00 
+                                                                    b_read           5      100.00 
+                                                                   b_write           3      100.00 
+                                                                    b_hold           4      100.00 
+                                                                   b_relse           0        0.00 
+                                                                       rst           0        0.00 
+
+Total Node Count     =         57 
+Toggled Node Count   =         39 
+Untoggled Node Count =         18 
+
+Toggle Coverage      =      81.90% (86 of 105 bins)
+
+COVERGROUP COVERAGE:
+-----------------------------------------------------------------------------------------------
+Covergroup                                             Metric       Goal    Status               
+                                                                                              
+-----------------------------------------------------------------------------------------------
+ TYPE /CSM_tb/coverage_i/valid_ops                     62.50%        100    Uncovered            
+    covered/total bins:                                    10         28                      
+    missing/total bins:                                    18         28                      
+    % Hit:                                             35.71%        100                      
+    type_option.weight=1
+    type_option.goal=100
+    type_option.comment=
+    type_option.strobe=0
+    type_option.merge_instances=auto(0)
+    Coverpoint valid_ops::a_operations                100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint valid_ops::b_operations                 75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint valid_ops::consective_op                75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Cross valid_ops::#cross__0#                         0.00%        100    ZERO                 
+        covered/total bins:                                 0         16                      
+        missing/total bins:                                16         16                      
+        % Hit:                                          0.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+ Covergroup instance \/CSM_tb/coverage_i/ops_cov       62.50%        100    Uncovered            
+    covered/total bins:                                    10         28                      
+    missing/total bins:                                    18         28                      
+    % Hit:                                             35.71%        100                      
+    option.name=\/CSM_tb/coverage_i/ops_cov 
+    option.weight=1
+    option.goal=100
+    option.comment=
+    option.at_least=1
+    option.auto_bin_max=64
+    option.cross_num_print_missing=0
+    option.detect_overlap=0
+    option.per_instance=0
+    option.get_inst_coverage=0
+    Coverpoint a_operations                           100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin a_read                                         37          1    Covered              
+        bin a_write                                         5          1    Covered              
+        bin a_hold                                          5          1    Covered              
+        bin a_relse                                 105623782          1    Covered              
+    Coverpoint b_operations                            75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin b_read                                         11          1    Covered              
+        bin b_write                                         7          1    Covered              
+        bin b_hold                                          4          1    Covered              
+        bin b_relse                                         0          1    ZERO                 
+    Coverpoint consective_op                           75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin a_read_twice                                   30          1    Covered              
+        bin a_write_a_read                                  1          1    Covered              
+        bin a_read_b_writes                                 2          1    Covered              
+        bin b_read_a_writes                                 0          1    ZERO                 
+    Cross #cross__0#                                    0.00%        100    ZERO                 
+        covered/total bins:                                 0         16                      
+        missing/total bins:                                16         16                      
+        % Hit:                                          0.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.cross_num_print_missing=0
+        bin <a_read,b_read>                                 0          1    ZERO                 
+        bin <a_write,b_read>                                0          1    ZERO                 
+        bin <a_hold,b_read>                                 0          1    ZERO                 
+        bin <a_relse,b_read>                                0          1    ZERO                 
+        bin <a_read,b_write>                                0          1    ZERO                 
+        bin <a_write,b_write>                               0          1    ZERO                 
+        bin <a_hold,b_write>                                0          1    ZERO                 
+        bin <a_relse,b_write>                               0          1    ZERO                 
+        bin <a_read,b_hold>                                 0          1    ZERO                 
+        bin <a_write,b_hold>                                0          1    ZERO                 
+        bin <a_hold,b_hold>                                 0          1    ZERO                 
+        bin <a_relse,b_hold>                                0          1    ZERO                 
+        bin <a_read,b_relse>                                0          1    ZERO                 
+        bin <a_write,b_relse>                               0          1    ZERO                 
+        bin <a_hold,b_relse>                                0          1    ZERO                 
+        bin <a_relse,b_relse>                               0          1    ZERO                 
+ TYPE /CSM_tb/coverage_i/singals                       86.76%        100    Uncovered            
+    covered/total bins:                                    40         48                      
+    missing/total bins:                                     8         48                      
+    % Hit:                                             83.33%        100                      
+    type_option.weight=1
+    type_option.goal=100
+    type_option.comment=
+    type_option.strobe=0
+    type_option.merge_instances=auto(0)
+    Coverpoint singals::A_rw                          100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_rw                          100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_ack                         100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_ack                         100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_enable                      100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_enable                      100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_hold                        100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_hold                        100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_release                      50.00%        100    Uncovered            
+        covered/total bins:                                 1          2                      
+        missing/total bins:                                 1          2                      
+        % Hit:                                         50.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_release                     100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_err                          75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_err                         100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_in_AD                        50.00%        100    Uncovered            
+        covered/total bins:                                 2          4                      
+        missing/total bins:                                 2          4                      
+        % Hit:                                         50.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_in_AD                       100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::A_out_data                     75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Coverpoint singals::B_out_data                     50.00%        100    Uncovered            
+        covered/total bins:                                 2          4                      
+        missing/total bins:                                 2          4                      
+        % Hit:                                         50.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+    Cross singals::A_B_hold                            75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        type_option.weight=1
+        type_option.goal=100
+        type_option.comment=
+ Covergroup instance \/CSM_tb/coverage_i/singals_cov  
+                                                       86.76%        100    Uncovered            
+    covered/total bins:                                    40         48                      
+    missing/total bins:                                     8         48                      
+    % Hit:                                             83.33%        100                      
+    option.name=\/CSM_tb/coverage_i/singals_cov 
+    option.weight=1
+    option.goal=100
+    option.comment=
+    option.at_least=1
+    option.auto_bin_max=64
+    option.cross_num_print_missing=0
+    option.detect_overlap=0
+    option.per_instance=0
+    option.get_inst_coverage=0
+    Coverpoint A_rw                                   100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin read                                    105623845          1    Covered              
+        bin write                                           6          1    Covered              
+    Coverpoint B_rw                                   100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin read                                    105623845          1    Covered              
+        bin write                                           6          1    Covered              
+    Coverpoint A_ack                                  100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin no_ack                                          7          1    Covered              
+        bin ack                                     105623844          1    Covered              
+    Coverpoint B_ack                                  100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin no_ack                                  105623789          1    Covered              
+        bin ack                                            62          1    Covered              
+    Coverpoint A_enable                               100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin A_disable                               105623821          1    Covered              
+        bin A_enable                                       30          1    Covered              
+    Coverpoint B_enable                               100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin B_disable                                      52          1    Covered              
+        bin B_enable                                105623799          1    Covered              
+    Coverpoint A_hold                                 100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                 105623846          1    Covered              
+        bin auto[1]                                         5          1    Covered              
+    Coverpoint B_hold                                 100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                 105623847          1    Covered              
+        bin auto[1]                                         4          1    Covered              
+    Coverpoint A_release                               50.00%        100    Uncovered            
+        covered/total bins:                                 1          2                      
+        missing/total bins:                                 1          2                      
+        % Hit:                                         50.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                 105623851          1    Covered              
+        bin auto[1]                                         0          1    ZERO                 
+    Coverpoint B_release                              100.00%        100    Covered              
+        covered/total bins:                                 2          2                      
+        missing/total bins:                                 0          2                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                        70          1    Covered              
+        bin auto[1]                                 105623781          1    Covered              
+    Coverpoint A_err                                   75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                        63          1    Covered              
+        bin auto[1]                                         4          1    Covered              
+        bin auto[2]                                 105623784          1    Covered              
+        bin auto[3]                                         0          1    ZERO                 
+    Coverpoint B_err                                  100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin auto[0]                                        62          1    Covered              
+        bin auto[1]                                         5          1    Covered              
+        bin auto[2]                                         3          1    Covered              
+        bin auto[3]                                 105623781          1    Covered              
+    Coverpoint A_in_AD                                 50.00%        100    Uncovered            
+        covered/total bins:                                 2          4                      
+        missing/total bins:                                 2          4                      
+        % Hit:                                         50.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin address_data[0]                                58          1    Covered              
+        bin address_data[1]                                 0          1    ZERO                 
+        bin address_data[2]                                 0          1    ZERO                 
+        bin address_data[3]                         105623793          1    Covered              
+    Coverpoint B_in_AD                                100.00%        100    Covered              
+        covered/total bins:                                 4          4                      
+        missing/total bins:                                 0          4                      
+        % Hit:                                        100.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin address_data[0]                         105623836          1    Covered              
+        bin address_data[1]                                 2          1    Covered              
+        bin address_data[2]                                 7          1    Covered              
+        bin address_data[3]                                 6          1    Covered              
+    Coverpoint A_out_data                              75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin dataout[0]                                     12          1    Covered              
+        bin dataout[1]                                      0          1    ZERO                 
+        bin dataout[2]                                      2          1    Covered              
+        bin dataout[3]                                     19          1    Covered              
+    Coverpoint B_out_data                              50.00%        100    Uncovered            
+        covered/total bins:                                 2          4                      
+        missing/total bins:                                 2          4                      
+        % Hit:                                         50.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.auto_bin_max=64
+        option.detect_overlap=0
+        bin dataout[0]                                     20          1    Covered              
+        bin dataout[1]                                      0          1    ZERO                 
+        bin dataout[2]                                      0          1    ZERO                 
+        bin dataout[3]                              105623789          1    Covered              
+    Cross A_B_hold                                     75.00%        100    Uncovered            
+        covered/total bins:                                 3          4                      
+        missing/total bins:                                 1          4                      
+        % Hit:                                         75.00%        100                      
+        option.weight=1
+        option.goal=100
+        option.comment=
+        option.at_least=1
+        option.cross_num_print_missing=0
+        bin <auto[0],auto[0]>                       105623842          1    Covered              
+        bin <auto[1],auto[0]>                               5          1    Covered              
+        bin <auto[0],auto[1]>                               4          1    Covered              
+        bin <auto[1],auto[1]>                               0          1    ZERO                 
+
+TOTAL COVERGROUP COVERAGE: 74.63%  COVERGROUP TYPES: 2
+
+Total Coverage By File (code coverage only, filtered view): 81.90%
+
