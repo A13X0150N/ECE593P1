@@ -107,7 +107,7 @@ task send_op(input byte addr, input byte data, input operation_t iop);
             a_read   : cmd_A_read(addr);
             a_write  : cmd_A_write(addr,data);
             a_hold   : cmd_A_hold();
-            a_relse  : cmd_B_release();
+            a_relse  : cmd_A_release();
             b_read   : cmd_B_read(addr);
             b_write  : cmd_B_write(addr,data);
             b_hold   : cmd_B_hold();
