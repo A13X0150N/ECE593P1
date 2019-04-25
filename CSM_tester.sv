@@ -24,7 +24,7 @@ endfunction : generate_data
 
 function byte generate_addr();
 	byte		address;
-	address = 	$random & 2'b11; // It can be 0,1,2,3
+	address = 	$random & 3'b111; // It can be 0,1,...,7
 	return address;
 endfunction : generate_addr
 
